@@ -77,12 +77,14 @@ jobs:
 
       - name: Build Docker image
         run: |
+          IMAGE_REPO="ghcr.io/${GITHUB_REPOSITORY_OWNER,,}/django-jfrog-demo"
           docker build \
-            -t ghcr.io/${{ github.repository_owner | lower }}/django-jfrog-demo:${{ github.sha }} \
-            -t ghcr.io/${{ github.repository_owner | lower }}/django-jfrog-demo:latest \
+            -t "${IMAGE_REPO}:${{ github.sha }}" \
+            -t "${IMAGE_REPO}:latest" \
             .
 
       - name: Push Docker image
         run: |
-          docker push ghcr.io/${{ github.repository_owner | lower }}/django-jfrog-demo:${{ github.sha }}
-          docker push ghcr.io/${{ github.repository_owner | lower }}/django-jfrog-demo:latest
+          IMAGE_REPO="ghcr.io/${GITHUB_REPOSITORY_OWNER,,}/django-jfrog-demo"
+          docker push "${IMAGE_REPO}:${{ github.sha }}"
+          docker push "${IMAGE_REPO}:latest"
