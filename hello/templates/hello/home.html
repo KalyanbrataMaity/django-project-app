@@ -1,0 +1,30 @@
+{% extends "hello/base.html" %}
+
+{% block title %}
+People
+{% endblock %}
+
+{% block content %}
+
+<h1>People Directory</h1>
+
+<h2>Add a new person</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Add</button>
+</form>
+
+<hr>
+
+<h2>People</h2>
+<ul>
+    {% for person in people %}
+        <li>
+            {{ person.name }} - {{ person.age }}
+            <a href="{% url 'edit_person' person.id %}">Edit</a>
+            <a href="{% url 'delete_person' person.id %}">Delete</a>
+        </li>
+    {% endfor %}
+</ul>    
+{% endblock %}
